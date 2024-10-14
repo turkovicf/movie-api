@@ -15,9 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\Movie\" />
-    <Folder Include="Dtos\Actor\" />
-    <Folder Include="Dtos\MovieActor\" />
     <Folder Include="Dtos\MovieGenre\" />
   </ItemGroup>
 

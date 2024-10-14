@@ -10,6 +10,9 @@ namespace Movie.Application.Configuration
         {
             services.AddScoped<IGenreService, GenreService>();
             services.AddScoped<IDirectorService, DirectorService>();
+            services.AddScoped<IActorService, ActorService>();
+            services.AddScoped<IMovieService, MovieService>();
+            services.AddScoped<IMovieActorService, MovieActorService>();
 
             return services;
         }

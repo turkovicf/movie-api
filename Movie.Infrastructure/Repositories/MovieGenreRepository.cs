@@ -54,5 +54,14 @@ namespace Movie.Infrastructure.Repositories
                               .Take(pageSize)
                               .ToListAsync();
         }
+
+        public async Task<MovieGenre?> UpdateMovieGenreAsync(MovieGenre movieGenre)
+        {
+            _appDbContext.MoviesGenres.Update(movieGenre);
+            await _appDbContext.SaveChangesAsync();
+
+            var updatedMovieGenre = await _appDbContext.MoviesGenres.Include(mg => mg.Movie).Include(mg => mg.Genre).Where(mg => mg.Id == movieGenre.Id).FirstOrDefaultAsync();
+            return updatedMovieGenre;
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace Movie.Infrastructure.Repositories
 
             if (!string.IsNullOrEmpty(name))
             {
-                query = query.Where(a => a.Name == name);
+                query = query.Where(a => a.Name.Contains(name));
             }
 
             if (!string.IsNullOrEmpty(movie))

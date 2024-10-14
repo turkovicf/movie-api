@@ -13,12 +13,12 @@ namespace Movie.Infrastructure.Repositories
         }
         public async Task<Domain.Entities.Movie?> GetMovieByIdAsync(Guid id)
         {
-            return await _appDbContext.Movies.FindAsync(id);
+            return await _appDbContext.Movies.Include(m => m.MovieGenres).ThenInclude(mg => mg.Genre).Include(m => m.MovieActors).ThenInclude(ma => ma.Actor).FirstOrDefaultAsync();
         }
 
         public async Task<List<Domain.Entities.Movie>> GetMoviesAsync(int pageNumber, int pageSize, string? name = null, string? genre = null, string? director = null, string? actor = null, int? releaseYear = null)
         {
-            IQueryable<Domain.Entities.Movie> query = _appDbContext.Movies;
+            IQueryable<Domain.Entities.Movie> query = _appDbContext.Movies.Include(m => m.MovieGenres).ThenInclude(mg => mg.Genre).Include(m => m.MovieActors).ThenInclude(ma => ma.Actor);
 
             if (!string.IsNullOrEmpty(name))
             {
@@ -71,7 +71,11 @@ namespace Movie.Infrastructure.Repositories
 
         public async Task<Domain.Entities.Movie> UpdateMovieAsync(Domain.Entities.Movie movie)
         {
-            var existingMovie = await _appDbContext.Movies.FindAsync(movie.Id); 
+            var existingMovie = await _appDbContext.Movies
+                .Include(m => m.MovieGenres)
+                .Include(m => m.MovieActors)
+                .FirstOrDefaultAsync(m => m.Id == movie.Id);
+
             if (existingMovie == null)
             {
                 throw new KeyNotFoundException("Movie not found."); 
@@ -85,6 +89,8 @@ namespace Movie.Infrastructure.Repositories
             existingMovie.Rating = movie.Rating;
             existingMovie.DirectorId = movie.DirectorId;
             existingMovie.Language = movie.Language;
+            existingMovie.MovieGenres = movie.MovieGenres;
+            existingMovie.MovieActors = movie.MovieActors;
 
             await _appDbContext.SaveChangesAsync(); 
             return existingMovie;

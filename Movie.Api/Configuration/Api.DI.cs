@@ -9,7 +9,6 @@ namespace Movie.Api.Configuration
         {
             services.AddApplicationDI().AddInfrastructureDI(configuration);
 
-
             return services;
         }
     }

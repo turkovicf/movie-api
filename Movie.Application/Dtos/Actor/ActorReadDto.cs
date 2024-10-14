@@ -1,8 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Movie.Domain.Entities;
 
-namespace Movie.Application.Dtos.Director
+namespace Movie.Application.Dtos.Actor
 {
-    public class DirectorReadDto
+    public class ActorReadDto
     {
         public Guid Id { get; set; }
         public string? Name { get; set; }

@@ -7,6 +7,7 @@ namespace Movie.Domain.Interfaces
         Task<List<MovieGenre>> GetMovieGenresAsync(int pageNumber, int pageSize, Guid? movieId = null, Guid? genreId = null);
         Task<MovieGenre?> GetMovieGenreByIdAsync(Guid id);
         Task<MovieGenre> AddMovieGenreAsync(MovieGenre movieGenre);
+        Task<MovieGenre?> UpdateMovieGenreAsync(MovieGenre movieGenre);
         Task<bool> DeleteMovieGenreAsync(Guid id);
     }
 }

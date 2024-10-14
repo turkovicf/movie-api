@@ -7,6 +7,7 @@ namespace Movie.Domain.Interfaces
         Task<List<MovieActor>> GetMovieActorsAsync(int pageNumber, int pageSize, Guid? movieId = null, Guid? actorId = null);
         Task<MovieActor?> GetMovieActorByIdAsync(Guid id);
         Task<MovieActor> AddMovieActorAsync(MovieActor movieActor);
+        Task<MovieActor?> UpdateMovieActorAsync(MovieActor movieActor);
         Task<bool> DeleteMovieActorAsync(Guid id);
     }
 }

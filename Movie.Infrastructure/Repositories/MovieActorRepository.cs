@@ -2,6 +2,7 @@
 using Movie.Domain.Interfaces;
 using Movie.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 
 namespace Movie.Infrastructure.Repositories
 {
@@ -18,7 +19,9 @@ namespace Movie.Infrastructure.Repositories
         {
             _appDbContext.MovieActors.Add(movieActor);
             await _appDbContext.SaveChangesAsync();
-            return movieActor;
+            
+            var addedMovieActor = await _appDbContext.MovieActors.Include(ma => ma.Movie).Include(ma => ma.Actor).Where(ma => ma.Id == movieActor.Id).FirstOrDefaultAsync();
+            return addedMovieActor;
         }
 
         public async Task<bool> DeleteMovieActorAsync(Guid id)
@@ -33,7 +36,7 @@ namespace Movie.Infrastructure.Repositories
 
         public async Task<MovieActor?> GetMovieActorByIdAsync(Guid id)
         {
-            return await _appDbContext.MovieActors.FindAsync(id);
+            return await _appDbContext.MovieActors.Include(ma => ma.Movie).Include(ma => ma.Actor).Where(ma => ma.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<List<MovieActor>> GetMovieActorsAsync(int pageNumber, int pageSize, Guid? movieId = null, Guid? actorId = null)
@@ -53,6 +56,15 @@ namespace Movie.Infrastructure.Repositories
             return await query.Skip((pageNumber - 1) * pageSize)
                               .Take(pageSize)
                               .ToListAsync();
+        }
+
+        public async Task<MovieActor?> UpdateMovieActorAsync(MovieActor movieActor)
+        {
+            _appDbContext.MovieActors.Update(movieActor);
+            await _appDbContext.SaveChangesAsync();
+
+            var updatedMovieActor = await _appDbContext.MovieActors.Include(ma => ma.Movie).Include(ma => ma.Actor).Where(ma => ma.Id == movieActor.Id).FirstOrDefaultAsync();
+            return updatedMovieActor;
         }
     }
 }
