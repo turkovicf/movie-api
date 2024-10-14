@@ -40,9 +40,9 @@ namespace Movie.Infrastructure.Repositories
                 query = query.Where(m => m.MovieActors.Any(ma => ma.Actor.Name.Contains(actor)));
             }
 
-            if (releaseYear != null)
+            if (releaseYear.HasValue)
             {
-                query = query.Where(m => m.ReleaseYear == releaseYear);
+                query = query.Where(m => m.ReleaseYear.Equals(releaseYear));
             }
 
             return await query.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();

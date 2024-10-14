@@ -17,7 +17,7 @@ namespace Movie.Api.Controllers
         [HttpGet]
         public async Task<ActionResult<List<MovieReadDto>>> GetMovies(int pageNumber = 1, int pageSize = 10, string? name = null, string? genre = null, string? director = null, string? actor = null, int? releaseYear = null)
         {
-            var movies = await _movieService.GetMoviesAsync(pageNumber, pageSize, name, genre, director, actor);
+            var movies = await _movieService.GetMoviesAsync(pageNumber, pageSize, name, genre, director, actor, releaseYear);
 
             return Ok(movies);
         }
