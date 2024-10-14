@@ -13,6 +13,7 @@ namespace Movie.Application.Configuration
             services.AddScoped<IActorService, ActorService>();
             services.AddScoped<IMovieService, MovieService>();
             services.AddScoped<IMovieActorService, MovieActorService>();
+            services.AddScoped<IMovieGenreService, MovieGenreService>();
 
             return services;
         }

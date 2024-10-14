@@ -33,7 +33,7 @@ namespace Movie.Infrastructure.Repositories
 
         public async Task<MovieGenre?> GetMovieGenreByIdAsync(Guid id)
         {
-            return await _appDbContext.MoviesGenres.FindAsync(id);
+            return await _appDbContext.MoviesGenres.Include(mg => mg.Genre).Include(mg => mg.Movie).Where(mg => mg.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<List<MovieGenre>> GetMovieGenresAsync(int pageNumber, int pageSize, Guid? movieId = null, Guid? genreId = null)
