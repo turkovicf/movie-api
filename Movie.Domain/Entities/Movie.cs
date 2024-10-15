@@ -25,7 +25,7 @@ namespace Movie.Domain.Entities
         [Range(1, 10)]
         public float? Rating { get; set; }
 
-        public required Guid DirectorId { get; set; }
+        public Guid? DirectorId { get; set; } 
 
         [MaxLength(50)]
         public string? Language { get; set; }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Movie.Infrastructure.Data;
 
@@ -11,9 +12,11 @@ using Movie.Infrastructure.Data;
 namespace Movie.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241015114156_EntityTweaksMigration")]
+    partial class EntityTweaksMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -87,7 +90,7 @@ namespace Movie.Infrastructure.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<Guid?>("DirectorId")
+                    b.Property<Guid>("DirectorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("Duration")
@@ -164,7 +167,9 @@ namespace Movie.Infrastructure.Migrations
                 {
                     b.HasOne("Movie.Domain.Entities.Director", "Director")
                         .WithMany("Movies")
-                        .HasForeignKey("DirectorId");
+                        .HasForeignKey("DirectorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("Director");
                 });

@@ -13,7 +13,7 @@ namespace Movie.Infrastructure.Repositories
         }
         public async Task<Domain.Entities.Movie?> GetMovieByIdAsync(Guid id)
         {
-            return await _appDbContext.Movies.Include(m => m.MovieGenres).ThenInclude(mg => mg.Genre).Include(m => m.MovieActors).ThenInclude(ma => ma.Actor).FirstOrDefaultAsync();
+            return await _appDbContext.Movies.Include(m => m.MovieGenres).ThenInclude(mg => mg.Genre).Include(m => m.MovieActors).ThenInclude(ma => ma.Actor).Where(m => m.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<List<Domain.Entities.Movie>> GetMoviesAsync(int pageNumber, int pageSize, string? name = null, string? genre = null, string? director = null, string? actor = null, int? releaseYear = null)

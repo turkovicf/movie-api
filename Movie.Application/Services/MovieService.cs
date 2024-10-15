@@ -25,16 +25,27 @@ namespace Movie.Application.Services
                 Description = movieDto.Description,
                 PosterUrl = movieDto.PosterUrl,
                 Rating = movieDto.Rating,
-                DirectorId = movieDto.DirectorId,
+                DirectorId = movieDto.DirectorId ?? Guid.Empty,
                 Language = movieDto.Language,
             };
 
             var addedMovie = await _movieRepository.AddMovieAsync(movie);
 
-            addedMovie.MovieGenres = movieDto.GenreIds.Select(genreId => new MovieGenre { MovieId = addedMovie.Id, GenreId = genreId }).ToList();
-            addedMovie.MovieActors = movieDto.ActorIds.Select(actorId => new MovieActor { MovieId = addedMovie.Id, ActorId = actorId }).ToList();
+            if (movieDto.GenreIds != null)
+            {
+                addedMovie.MovieGenres = movieDto.GenreIds.Select(genreId => new MovieGenre { MovieId = addedMovie.Id, GenreId = genreId }).ToList();
+            }
 
-            await _movieRepository.UpdateMovieAsync(addedMovie);
+            if (movieDto.ActorIds != null)
+            {
+                addedMovie.MovieActors = movieDto.ActorIds.Select(actorId => new MovieActor { MovieId = addedMovie.Id, ActorId = actorId }).ToList();
+            }
+
+            if (movieDto.ActorIds != null || movieDto.GenreIds != null)
+            {
+                await _movieRepository.UpdateMovieAsync(addedMovie);
+            }
+
             var updatedMovie = await _movieRepository.GetMovieByIdAsync(addedMovie.Id);
 
             return new MovieReadDetailsDto
@@ -45,11 +56,11 @@ namespace Movie.Application.Services
                 Duration = updatedMovie.Duration,
                 Description = updatedMovie.Description,
                 PosterUrl = updatedMovie.PosterUrl,
-                Rating = (float)updatedMovie.Rating,
-                DirectorId = updatedMovie.DirectorId,
+                Rating = updatedMovie.Rating ?? 0f,
+                DirectorId = updatedMovie.DirectorId ?? Guid.Empty,
                 Language = updatedMovie.Language,
-                Genres = updatedMovie.MovieGenres.Select(mg => new GenreReadDto { Id = mg.Id, Name = mg.Genre.Name }).ToList(),
-                Actors = updatedMovie.MovieActors.Select(ma => new ActorReadDto { Id = ma.Id, Name = ma.Actor.Name, BirthDate = ma.Actor.BirthDate }).ToList()
+                Genres = updatedMovie.MovieGenres?.Select(mg => new GenreReadDto { Id = mg.Id, Name = mg.Genre.Name }).ToList(),
+                Actors = updatedMovie.MovieActors?.Select(ma => new ActorReadDto { Id = ma.Id, Name = ma.Actor.Name, BirthDate = ma.Actor.BirthDate }).ToList()
             };
         }
 
@@ -71,7 +82,7 @@ namespace Movie.Application.Services
                 Description = movie.Description,
                 PosterUrl = movie.PosterUrl,
                 Rating = (float)movie.Rating,
-                DirectorId = movie.DirectorId,
+                DirectorId = movie.DirectorId ?? Guid.Empty,
                 Language = movie.Language,
                 Genres = movie.MovieGenres.Select(mg => new GenreReadDto { Id = mg.Id, Name = mg.Genre.Name }).ToList(),
                 Actors = movie.MovieActors.Select(ma => new ActorReadDto { Id = ma.Id, Name = ma.Actor.Name, BirthDate = ma.Actor.BirthDate }).ToList()
@@ -91,7 +102,7 @@ namespace Movie.Application.Services
                 Description = movie.Description,
                 PosterUrl = movie.PosterUrl,
                 Rating = (float)movie.Rating,
-                DirectorId = movie.DirectorId,
+                DirectorId = movie.DirectorId ?? Guid.Empty,
                 Language = movie.Language,
             });
         }
@@ -128,7 +139,7 @@ namespace Movie.Application.Services
                 Description = updatedMovie.Description,
                 PosterUrl = updatedMovie.PosterUrl,
                 Rating = (float)updatedMovie.Rating,
-                DirectorId = updatedMovie.DirectorId,
+                DirectorId = movie.DirectorId ?? Guid.Empty,
                 Language = updatedMovie.Language,
                 Genres = updatedMovie.MovieGenres.Select(mg => new GenreReadDto { Id = mg.Id, Name = mg.Genre.Name }).ToList(),
                 Actors = updatedMovie.MovieActors.Select(ma => new ActorReadDto { Id = ma.Id, Name = ma.Actor.Name, BirthDate = ma.Actor.BirthDate }).ToList()

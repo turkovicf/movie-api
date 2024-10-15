@@ -52,7 +52,7 @@ namespace Movie.Application.Services
                     Id = movieActor.Movie.Id, 
                     Title = movieActor.Movie.Title, 
                     Description = movieActor.Movie.Description, 
-                    DirectorId = movieActor.Movie.DirectorId, 
+                    DirectorId = movieActor.Movie.DirectorId ?? Guid.Empty, 
                     Duration = movieActor.Movie.Duration,
                     Language = movieActor.Movie.Language,
                     PosterUrl = movieActor.Movie.PosterUrl,
