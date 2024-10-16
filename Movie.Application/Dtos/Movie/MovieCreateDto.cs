@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Movie.Application.Dtos.Movie
 {
@@ -23,7 +22,6 @@ namespace Movie.Application.Dtos.Movie
         public string? PosterUrl { get; set; }
 
         [Range(1, 10)]
-        [AllowedValues(typeof(float), null)]
         public float? Rating { get; set; }
         public Guid? DirectorId { get; set; }
 

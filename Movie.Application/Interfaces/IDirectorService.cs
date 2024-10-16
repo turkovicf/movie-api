@@ -9,6 +9,6 @@ namespace Movie.Application.Interfaces
         Task<bool> DeleteDirectorAsync(Guid id);
         Task<DirectorReadDto?> GetDirectorByIdAsync(Guid id);
         Task<List<DirectorReadDto>> GetDirectorsAsync(int pageNumber, int pageSize, string? name = null, string? movie = null);
-        Task<DirectorReadDto> UpdateDirectorAsync(Guid id, DirectorUpdateDto directorDto);
+        Task<DirectorReadDto?> UpdateDirectorAsync(Guid id, DirectorUpdateDto directorDto);
     }
 }
