@@ -1,23 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Movie.Application.Dtos.Movie
 {
     public class MovieUpdateDto
     {
-        public string? Title { get; set; }
-        public int ReleaseYear { get; set; }
-        public int Duration { get; set; }
-        public string? Description { get; set; }
+        [MaxLength(100)]
+        public required string Title { get; set; }
+
+        [Range(1888, 2100)]
+        public required int ReleaseYear { get; set; }
+
+        [Range(1, 600)]
+        public required int Duration { get; set; }
+
+        [MaxLength(500)]
+        public required string Description { get; set; }
+
+        [Url]
         public string? PosterUrl { get; set; }
-        public float Rating { get; set; }
-        public Guid DirectorId { get; set; }
+
+        [Range(1, 10)]
+        public float? Rating { get; set; }
+        public Guid? DirectorId { get; set; }
+
+        [MaxLength(50)]
         public string? Language { get; set; }
 
-        public List<Guid> GenreIds { get; set; } = new List<Guid>();
-        public List<Guid> ActorIds { get; set; } = new List<Guid>();
+        public List<Guid>? GenreIds { get; set; }
+        public List<Guid>? ActorIds { get; set; }
     }
 }

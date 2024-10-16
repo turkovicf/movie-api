@@ -1,8 +1,12 @@
-﻿namespace Movie.Application.Dtos.Director
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Movie.Application.Dtos.Director
 {
     public class DirectorUpdateDto
     {
-        public string? Name { get; set; }
+        [Required(AllowEmptyStrings = false, ErrorMessage = "Director name cannot be empty.")]
+        [MaxLength(100)]
+        public required string Name { get; set; }
         public DateTime BirthDate { get; set; }
     }
 }

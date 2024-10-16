@@ -81,7 +81,7 @@ namespace Movie.Application.Services
                 Duration = movie.Duration,
                 Description = movie.Description,
                 PosterUrl = movie.PosterUrl,
-                Rating = (float)movie.Rating,
+                Rating = movie.Rating ?? 0f,
                 DirectorId = movie.DirectorId ?? Guid.Empty,
                 Language = movie.Language,
                 Genres = movie.MovieGenres.Select(mg => new GenreReadDto { Id = mg.Id, Name = mg.Genre.Name }).ToList(),
@@ -101,7 +101,7 @@ namespace Movie.Application.Services
                 Duration = movie.Duration,
                 Description = movie.Description,
                 PosterUrl = movie.PosterUrl,
-                Rating = (float)movie.Rating,
+                Rating = movie.Rating ?? 0f,
                 DirectorId = movie.DirectorId ?? Guid.Empty,
                 Language = movie.Language,
             });

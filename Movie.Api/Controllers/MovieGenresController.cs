@@ -53,7 +53,7 @@ namespace Movie.Api.Controllers
         {
             var result = await _movieGenreService.DeleteMovieGenreAsync(id);
 
-            return result == null ? NotFound() : NoContent();
+            return result == false ? NotFound() : NoContent();
         }
     }
 }

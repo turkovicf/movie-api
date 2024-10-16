@@ -1,8 +1,12 @@
-﻿namespace Movie.Application.Dtos.MovieGenre
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Movie.Application.Dtos.MovieGenre
 {
     public class MovieGenreCreateDto
     {
-        public Guid MovieId { get; set; }
-        public Guid GenreId {  get; set; }
+        [Required(AllowEmptyStrings = false)]
+        public required Guid MovieId { get; set; }
+        [Required(AllowEmptyStrings = false)]
+        public required Guid GenreId {  get; set; }
     }
 }
