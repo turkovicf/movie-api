@@ -11,6 +11,6 @@ namespace Movie.Infrastructure.Data
         public DbSet<Director> Directors { get; set; }
         public DbSet<MovieGenre> MoviesGenres { get; set; }
         public DbSet<MovieActor> MovieActors { get; set; }
-
+        public DbSet<User> Users { get; set; }
     }
 }
